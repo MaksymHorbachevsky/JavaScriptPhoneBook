@@ -46,14 +46,25 @@ phoneBook.remove = function (query) {
    Функція виведення всіх телефонів.
 */
 phoneBook.showTable = function () {
-  document.write("<table>");
-  document.write(
-    "<thead><tr><th>Ім'я</th><th>Телефон</th><th>Email</th></tr></thead>"
-  );
-  for (var rec of phoneBook) {
-    document.write(
-      `<tr><td>${rec.name}</td><td>${rec.phone}</td><td>${rec.email}</td></tr>`
-    );
+  var table = document.createElement("table");
+  var headRow = document.createElement("tr");
+  for (var key in phoneBook[0]) {
+    var headCell = document.createElement("th");
+    headCell.innerText = key;
+    headRow.appendChild(headCell);
   }
-  document.write("</table>");
+  table.appendChild(headRow);
+  for (var i = 0; i < phoneBook.length; i++) {
+    var row = document.createElement("tr");
+    for (var key in phoneBook[i]) {
+      var cell = document.createElement("td");
+      cell.textContent = phoneBook[i][key];
+      if (typeof phoneBook[i][key] === "number") {
+        cell.style.textAlign = "right";
+      }
+      row.appendChild(cell);
+    }
+    table.appendChild(row);
+  }
+  document.body.appendChild(table);
 };
